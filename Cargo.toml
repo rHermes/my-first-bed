@@ -23,7 +23,7 @@ git = "https://github.com/stm32-rs/stm32f7xx-hal.git"
 
 # this lets you use `cargo fix`!
 [[bin]]
-name = "my-first-bed"
+name = "4x4-led-matrix"
 test = false
 bench = false
 
