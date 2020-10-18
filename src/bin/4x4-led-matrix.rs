@@ -138,6 +138,346 @@ fn main() -> ! {
 
     let mut delay = Delay::new(cp.SYST, clocks);
 
+    let fps: u32 = 10;
+    let min_space = 50_u32;
+
+    // How long we have to wait in microseconds
+    let frame_space = (1000 * 1000) / fps;
+
+    let frames = pat_spiral_trail();
+
+    loop {
+        for frame in &frames {
+            draw_frame(
+                &mut cols,
+                &mut rows,
+                frame,
+                &mut delay,
+                frame_space,
+                min_space,
+            )
+        }
+    }
+}
+
+fn pat_spiral_trail() -> [Frame; 32] {
+    let f = false;
+    let t = true;
+    #[cfg_attr(rustfmt, rustfmt_skip)]
+    [
+        [
+            [f, f, f, f],
+            [f, f, t, f],
+            [f, f, f, f],
+            [f, f, f, f],
+        ],
+        [
+            [f, f, f, f],
+            [f, t, t, f],
+            [f, f, f, f],
+            [f, f, f, f],
+        ],
+        [
+            [f, f, f, f],
+            [f, t, t, f],
+            [f, t, f, f],
+            [f, f, f, f],
+        ],
+        [
+            [f, f, f, f],
+            [f, t, t, f],
+            [f, t, t, f],
+            [f, f, f, f],
+        ],
+        [
+            [f, f, f, f],
+            [f, t, t, f],
+            [f, t, t, t],
+            [f, f, f, f],
+        ],
+        [
+            [f, f, f, f],
+            [f, t, t, t],
+            [f, t, t, t],
+            [f, f, f, f],
+        ],
+        [
+            [f, f, f, t],
+            [f, t, t, t],
+            [f, t, t, t],
+            [f, f, f, f],
+        ],
+        [
+            [f, f, t, t],
+            [f, t, t, t],
+            [f, t, t, t],
+            [f, f, f, f],
+        ],
+        [
+            [f, t, t, t],
+            [f, t, t, t],
+            [f, t, t, t],
+            [f, f, f, f],
+        ],
+        [
+            [t, t, t, t],
+            [f, t, t, t],
+            [f, t, t, t],
+            [f, f, f, f],
+        ],
+        [
+            [t, t, t, t],
+            [t, t, t, t],
+            [f, t, t, t],
+            [f, f, f, f],
+        ],
+        [
+            [t, t, t, t],
+            [t, t, t, t],
+            [t, t, t, t],
+            [f, f, f, f],
+        ],
+        [
+            [t, t, t, t],
+            [t, t, t, t],
+            [t, t, t, t],
+            [t, f, f, f],
+        ],
+        [
+            [t, t, t, t],
+            [t, t, t, t],
+            [t, t, t, t],
+            [t, t, f, f],
+        ],
+        [
+            [t, t, t, t],
+            [t, t, t, t],
+            [t, t, t, t],
+            [t, t, t, f],
+        ],
+        [
+            [t, t, t, t],
+            [t, t, t, t],
+            [t, t, t, t],
+            [t, t, t, t],
+        ],
+        // Reverse
+        [
+            [t, t, t, t],
+            [t, t, f, t],
+            [t, t, t, t],
+            [t, t, t, t],
+        ],
+        [
+            [t, t, t, t],
+            [t, f, f, t],
+            [t, t, t, t],
+            [t, t, t, t],
+        ],
+        [
+            [t, t, t, t],
+            [t, f, f, t],
+            [t, f, t, t],
+            [t, t, t, t],
+        ],
+        [
+            [t, t, t, t],
+            [t, f, f, t],
+            [t, f, f, t],
+            [t, t, t, t],
+        ],
+        [
+            [t, t, t, t],
+            [t, f, f, t],
+            [t, f, f, f],
+            [t, t, t, t],
+        ],
+        [
+            [t, t, t, t],
+            [t, f, f, f],
+            [t, f, f, f],
+            [t, t, t, t],
+        ],
+        [
+            [t, t, t, f],
+            [t, f, f, f],
+            [t, f, f, f],
+            [t, t, t, t],
+        ],
+        [
+            [t, t, f, f],
+            [t, f, f, f],
+            [t, f, f, f],
+            [t, t, t, t],
+        ],
+        [
+            [t, f, f, f],
+            [t, f, f, f],
+            [t, f, f, f],
+            [t, t, t, t],
+        ],
+        [
+            [f, f, f, f],
+            [t, f, f, f],
+            [t, f, f, f],
+            [t, t, t, t],
+        ],
+        [
+            [f, f, f, f],
+            [f, f, f, f],
+            [t, f, f, f],
+            [t, t, t, t],
+        ],
+        [
+            [f, f, f, f],
+            [f, f, f, f],
+            [f, f, f, f],
+            [t, t, t, t],
+        ],
+        [
+            [f, f, f, f],
+            [f, f, f, f],
+            [f, f, f, f],
+            [f, t, t, t],
+        ],
+        [
+            [f, f, f, f],
+            [f, f, f, f],
+            [f, f, f, f],
+            [f, f, t, t],
+        ],
+        [
+            [f, f, f, f],
+            [f, f, f, f],
+            [f, f, f, f],
+            [f, f, f, t],
+        ],
+        [
+            [f, f, f, f],
+            [f, f, f, f],
+            [f, f, f, f],
+            [f, f, f, f],
+        ],
+    ]
+}
+
+fn pat_spiral() -> [Frame; 18] {
+    let f = false;
+    let t = true;
+    #[cfg_attr(rustfmt, rustfmt_skip)]
+    [
+        [
+            [f, f, f, f],
+            [f, f, t, f],
+            [f, f, f, f],
+            [f, f, f, f],
+        ],
+        [
+            [f, f, f, f],
+            [f, t, t, f],
+            [f, f, f, f],
+            [f, f, f, f],
+        ],
+        [
+            [f, f, f, f],
+            [f, t, f, f],
+            [f, t, f, f],
+            [f, f, f, f],
+        ],
+        [
+            [f, f, f, f],
+            [f, f, f, f],
+            [f, t, t, f],
+            [f, f, f, f],
+        ],
+        [
+            [f, f, f, f],
+            [f, f, f, f],
+            [f, f, t, t],
+            [f, f, f, f],
+        ],
+        [
+            [f, f, f, f],
+            [f, f, f, t],
+            [f, f, f, t],
+            [f, f, f, f],
+        ],
+        [
+            [f, f, f, t],
+            [f, f, f, t],
+            [f, f, f, f],
+            [f, f, f, f],
+        ],
+        [
+            [f, f, t, t],
+            [f, f, f, f],
+            [f, f, f, f],
+            [f, f, f, f],
+        ],
+        [
+            [f, t, t, f],
+            [f, f, f, f],
+            [f, f, f, f],
+            [f, f, f, f],
+        ],
+        [
+            [t, t, f, f],
+            [f, f, f, f],
+            [f, f, f, f],
+            [f, f, f, f],
+        ],
+        [
+            [t, f, f, f],
+            [t, f, f, f],
+            [f, f, f, f],
+            [f, f, f, f],
+        ],
+        [
+            [f, f, f, f],
+            [t, f, f, f],
+            [t, f, f, f],
+            [f, f, f, f],
+        ],
+        [
+            [f, f, f, f],
+            [f, f, f, f],
+            [t, f, f, f],
+            [t, f, f, f],
+        ],
+        [
+            [f, f, f, f],
+            [f, f, f, f],
+            [f, f, f, f],
+            [t, t, f, f],
+        ],
+        [
+            [f, f, f, f],
+            [f, f, f, f],
+            [f, f, f, f],
+            [f, t, t, f],
+        ],
+        [
+            [f, f, f, f],
+            [f, f, f, f],
+            [f, f, f, f],
+            [f, f, t, t],
+        ],
+        [
+            [f, f, f, f],
+            [f, f, f, f],
+            [f, f, f, f],
+            [f, f, f, t],
+        ],
+        [
+            [f, f, f, f],
+            [f, f, f, f],
+            [f, f, f, f],
+            [f, f, f, f],
+        ],
+    ]
+}
+
+fn pat_xor() -> [Frame; 2] {
     let f_xor_one: Frame = [
         [false, true, false, true],
         [true, false, true, false],
@@ -152,23 +492,86 @@ fn main() -> ! {
         [false, true, false, true],
     ];
 
-    let frames = [f_xor_one, f_xor_two];
-    let fps: u32 = 1;
-    let min_space = 100_u32;
+    [f_xor_one, f_xor_two]
+}
 
-    // How long we have to wait in microseconds
-    let frame_space = (1000 * 1000) / fps;
+fn pat_spinner() -> [Frame; 20] {
+    let f_frame_01: Frame = [
+        [false, false, true, false],
+        [false, false, true, false],
+        [false, false, false, false],
+        [false, false, false, false],
+    ];
+    let f_frame_02: Frame = [
+        [false, false, false, true],
+        [false, false, true, false],
+        [false, false, false, false],
+        [false, false, false, false],
+    ];
+    let f_frame_03: Frame = [
+        [false, false, false, false],
+        [false, false, true, true],
+        [false, false, false, false],
+        [false, false, false, false],
+    ];
+    let f_frame_04: Frame = [
+        [false, false, false, false],
+        [false, false, false, false],
+        [false, false, true, true],
+        [false, false, false, false],
+    ];
+    let f_frame_05: Frame = [
+        [false, false, false, false],
+        [false, false, false, false],
+        [false, false, true, false],
+        [false, false, false, true],
+    ];
+    let f_frame_06: Frame = [
+        [false, false, false, false],
+        [false, false, false, false],
+        [false, false, true, false],
+        [false, false, true, false],
+    ];
+    let f_frame_07: Frame = [
+        [false, false, false, false],
+        [false, false, false, false],
+        [false, true, false, false],
+        [false, true, false, false],
+    ];
+    let f_frame_08: Frame = [
+        [false, false, false, false],
+        [false, false, false, false],
+        [false, true, false, false],
+        [true, false, false, false],
+    ];
+    let f_frame_09: Frame = [
+        [false, false, false, false],
+        [false, false, false, false],
+        [true, true, false, false],
+        [false, false, false, false],
+    ];
+    let f_frame_10: Frame = [
+        [false, false, false, false],
+        [true, true, false, false],
+        [false, false, false, false],
+        [false, false, false, false],
+    ];
+    let f_frame_11: Frame = [
+        [true, false, false, false],
+        [false, true, false, false],
+        [false, false, false, false],
+        [false, false, false, false],
+    ];
+    let f_frame_12: Frame = [
+        [false, true, false, false],
+        [false, true, false, false],
+        [false, false, false, false],
+        [false, false, false, false],
+    ];
 
-    loop {
-        for frame in &frames {
-            draw_frame(
-                &mut cols,
-                &mut rows,
-                frame,
-                &mut delay,
-                frame_space,
-                min_space,
-            )
-        }
-    }
+    [
+        f_frame_01, f_frame_01, f_frame_02, f_frame_03, f_frame_03, f_frame_04, f_frame_04,
+        f_frame_05, f_frame_06, f_frame_06, f_frame_07, f_frame_07, f_frame_08, f_frame_09,
+        f_frame_09, f_frame_10, f_frame_10, f_frame_11, f_frame_12, f_frame_12,
+    ]
 }
